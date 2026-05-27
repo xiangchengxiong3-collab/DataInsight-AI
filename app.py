@@ -2,7 +2,8 @@ import streamlit as st
 
 from src.data_loader import load_csv
 from src.eda import get_basic_info
-
+from src.visualization import plot_missing_values, plot_numeric_distribution
+from src.report import generate_basic_report
 
 st.set_page_config(
     page_title="DataInsight-AI",
@@ -49,9 +50,32 @@ if uploaded_file is not None:
         types_df.columns = ["字段名", "数据类型"]
         st.dataframe(types_df)
 
+        st.subheader("6. 缺失值可视化")
+        missing_fig = plot_missing_values(df)
+
+        if missing_fig is not None:         
+            st.pyplot(missing_fig)
+        else:
+            st.info("当前数据没有缺失值。")
+
+        st.subheader("7. 数值字段分布图")
+        dist_fig = plot_numeric_distribution(df)
+
+        if dist_fig is not None:
+            st.pyplot(dist_fig)
+        else:
+            st.info("当前数据没有可绘制的数值字段。")
+        
+        st.subheader("8. 自动分析结论")
+
+        report = generate_basic_report(df, info)
+
+        for item in report:
+            st.write("- " + item)
+        
     except Exception as e:
         st.error("文件读取失败，请检查 CSV 文件格式。")
         st.exception(e)
 
 else:
-    st.info("请先上传一个 CSV 文件。")
+    st.info("请先上传一个 CSV 文件。")  
