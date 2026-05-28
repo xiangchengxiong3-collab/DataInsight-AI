@@ -2,6 +2,13 @@
 
 DataInsight-AI 是一个基于 Python 与 Streamlit 开发的智能数据分析助手。
 
+## 在线演示
+
+项目已部署至 Streamlit Cloud，可在线访问：
+
+https://datainsight-ai.streamlit.app
+
+
 用户上传 CSV 文件后，系统能够自动完成：
 
 * 数据预览
