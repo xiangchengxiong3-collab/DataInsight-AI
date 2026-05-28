@@ -152,28 +152,33 @@ http://localhost:8501
 ## 数据预览
 
 支持 CSV 文件上传与数据表格展示。
+<img width="1919" height="860" alt="homepage" src="https://github.com/user-attachments/assets/a4a08c8d-58f0-44a0-8dab-3b6bd3aa1120" />
 
 ---
 
 ## 缺失值分析
 
 自动统计缺失值并生成缺失值柱状图。
+<img width="1878" height="310" alt="missing_values" src="https://github.com/user-attachments/assets/5ae00670-11d7-4f36-b914-7731d901d718" />
 
 ---
 
 ## 数值字段分布分析
 
 自动绘制数值型字段分布图。
+<img width="1214" height="875" alt="distribution" src="https://github.com/user-attachments/assets/d902d82b-811f-4ef8-b53d-3f3f99a4a131" />
 
 ---
 
 ## 自动分析结论
 
 自动生成基础数据分析报告。
+<img width="828" height="403" alt="report" src="https://github.com/user-attachments/assets/c6e2dd40-bb47-4487-b8d1-eaabeccd8c8e" />
 
 ---
 
 ## 机器学习建模
+<img width="1238" height="515" alt="modeling" src="https://github.com/user-attachments/assets/8815ddba-caf1-4e58-892b-2393b39030b0" />
 
 支持：
 
