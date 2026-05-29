@@ -216,3 +216,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# IDE / editor local settings
+.vscode/
+.vs/
+
+# macOS
+.DS_Store
+
+# Local project notes
+DataInsight-AI_版本迭代说明.docx
