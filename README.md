@@ -1,243 +1,103 @@
 # DataInsight-AI
 
-DataInsight-AI 是一个基于 Python 与 Streamlit 开发的智能数据分析助手。
+**Automated data analysis and machine learning web app.**
 
-## 在线演示
+Upload a CSV file and instantly get: exploratory data analysis, automated data cleaning, rich visualizations, an analysis report, and multi-model ML comparison — all through an intuitive web interface.
 
-项目已部署至 Streamlit Cloud，可在线访问：
+## Features
 
-https://datainsight-ai.streamlit.app
+- **Automated EDA** — row/column statistics, missing value analysis, data type detection, outlier detection
+- **Smart Data Cleaning** — deduplication, IQR-based outlier handling, missing value imputation, StandardScaler normalization, one-hot encoding
+- **Rich Visualizations** — missing value bar charts, multi-field distribution histograms, boxplots, correlation heatmaps
+- **Multi-Model Comparison** — 6 models compared head-to-head with evaluation metrics and feature importance
+- **Automated Analysis Report** — rule-based textual summaries of data quality, structure, and modeling readiness
 
+## Tech Stack
 
-用户上传 CSV 文件后，系统能够自动完成：
+| Layer            | Technology            |
+| ---------------- | --------------------- |
+| Web UI           | Streamlit             |
+| Data Processing  | Pandas, NumPy         |
+| Visualization    | Matplotlib, Seaborn   |
+| Machine Learning | Scikit-learn, XGBoost |
+| Testing          | Pytest                |
 
-* 数据预览
-* 数据基本信息统计
-* 缺失值分析
-* 数据类型识别
-* 数据可视化
-* 自动分析结论生成
-* 基础机器学习建模
+## Screenshots
 
-本项目主要用于展示 Python 数据分析、数据可视化、机器学习与 Web 数据应用开发能力，可作为数据科学与大数据技术方向的项目实践作品。
+| Landing Page                   | Missing Values                             |
+| ------------------------------ | ------------------------------------------ |
+| ![Homepage](images/homepage.png) | ![Missing Values](images/missing_values.png) |
 
----
+| Distributions                           | Analysis Report            |
+| --------------------------------------- | -------------------------- |
+| ![Distributions](images/distribution.png) | ![Report](images/report.png) |
 
-# 当前版本
+| ML Modeling                    |
+| ------------------------------ |
+| ![Modeling](images/modeling.png) |
 
-当前版本：v0.4 机器学习建模版
+## Architecture
 
----
-
-# 已实现功能
-
-## v0.1 基础数据分析
-
-* CSV 文件上传
-* 数据前 5 行预览
-* 行数统计
-* 列数统计
-* 字段名称展示
-* 重复值统计
-* 缺失值统计
-* 数据类型识别
-* CSV 文件异常处理
-
----
-
-## v0.2 数据可视化
-
-* 缺失值柱状图
-* 数值字段分布图
-
----
-
-## v0.3 自动分析结论
-
-自动生成：
-
-* 数据规模分析
-* 重复值分析
-* 缺失值分析
-* 缺失值最多字段识别
-* 数值型字段统计
-* 类别型字段统计
-* 数据分析建议
-
----
-
-## v0.4 机器学习建模
-
-支持：
-
-* 用户选择目标列
-* 自动判断分类任务或回归任务
-* 自动完成基础数据预处理
-* RandomForestClassifier
-* RandomForestRegressor
-* Accuracy
-* F1-score
-* R²
-* RMSE
-
----
-
-# 技术栈
-
-* Python
-* Streamlit
-* Pandas
-* Matplotlib
-* Scikit-learn
-* GitHub
-
----
-
-# 项目结构
-
-```text
-DataInsight-AI
-├── app.py
-├── requirements.txt
-├── README.md
-├── LICENSE
-├── .gitignore
-└── src
-    ├── data_loader.py
-    ├── eda.py
-    ├── visualization.py
-    ├── report.py
-    └── modeling.py
+```
+CSV Upload
+    │
+    ▼
+data_loader.py          ← Load CSV into DataFrame
+    │
+    ▼
+eda.py                  ← Basic stats, outlier detection, correlation
+    │
+    ▼
+preprocessing.py        ← Auto-clean: deduplicate → outliers → missing → scale → encode
+    │
+    ├── visualization.py ← Missing values, distributions, boxplots, heatmaps
+    ├── report.py        ← Auto-generated text report
+    │
+    ▼
+modeling.py             ← 6-model comparison + feature importance
 ```
 
----
-
-# 本地运行
-
-## 1. 克隆项目
+## Quick Start
 
 ```bash
-git clone <your-repository-url>
-```
-
----
-
-## 2. 进入项目目录
-
-```bash
+# Clone the repository
+git clone https://github.com/xiangchengxiong3-collab/DataInsight-AI.git
 cd DataInsight-AI
-```
 
----
+# Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-## 3. 安装依赖
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
----
-
-## 4. 启动项目
-
-```bash
+# Run the app
 streamlit run app.py
 ```
 
----
+Open http://localhost:8501 in your browser.
 
-## 5. 浏览器打开
+## Usage
 
-```text
-http://localhost:8501
+1. Upload a CSV file via the web interface
+2. View basic statistics and data types
+3. See the automated cleaning results (duplicates removed, outliers handled, etc.)
+4. Explore visualizations across 4 tabs
+5. Read the auto-generated analysis report
+6. Select a target column and run multi-model comparison
+7. View the best model and feature importance
+
+## Models
+
+**Classification:** Random Forest, XGBoost, Logistic Regression, SVM, KNN, Gradient Boosting
+**Regression:** Random Forest, XGBoost, Linear Regression, SVR, KNN, Gradient Boosting
+
+## Testing
+
+```bash
+python -m pytest tests/ -v
 ```
 
----
+## License
 
-# 项目演示
-
-## 数据预览
-
-支持 CSV 文件上传与数据表格展示。
-<img width="1919" height="860" alt="homepage" src="https://github.com/user-attachments/assets/a4a08c8d-58f0-44a0-8dab-3b6bd3aa1120" />
-
----
-
-## 缺失值分析
-
-自动统计缺失值并生成缺失值柱状图。
-<img width="1878" height="310" alt="missing_values" src="https://github.com/user-attachments/assets/5ae00670-11d7-4f36-b914-7731d901d718" />
-
----
-
-## 数值字段分布分析
-
-自动绘制数值型字段分布图。
-<img width="1214" height="875" alt="distribution" src="https://github.com/user-attachments/assets/d902d82b-811f-4ef8-b53d-3f3f99a4a131" />
-
----
-
-## 自动分析结论
-
-自动生成基础数据分析报告。
-<img width="828" height="403" alt="report" src="https://github.com/user-attachments/assets/c6e2dd40-bb47-4487-b8d1-eaabeccd8c8e" />
-
----
-
-## 机器学习建模
-<img width="1238" height="515" alt="modeling" src="https://github.com/user-attachments/assets/8815ddba-caf1-4e58-892b-2393b39030b0" />
-
-支持：
-
-* 分类任务
-* 回归任务
-* 自动模型训练
-* 自动输出评价指标
-
----
-
-# 后续计划
-
-## v0.5 AI 数据分析报告
-
-计划实现：
-
-* AI 自动数据分析
-* 自动生成数据质量报告
-* 自动生成建模建议
-* 自动生成业务分析结论
-
----
-
-## v0.6 Web 部署版
-
-计划实现：
-
-* Streamlit Cloud 在线部署
-* 支持公网访问
-* 项目在线演示
-
----
-
-# 项目亮点
-
-* 使用 Streamlit 构建交互式数据分析网页
-* 使用 Pandas 完成自动化数据探索分析
-* 使用 Matplotlib 实现基础可视化
-* 使用 Scikit-learn 完成基础机器学习建模
-* 自动判断分类任务与回归任务
-* 模块化项目结构，便于后续扩展
-* 支持真实 CSV 数据集分析
-* 适合作为数据分析 / AI / 大数据方向实习项目
-
----
-
-# 项目定位
-
-本项目定位为：
-
-```text
-数据分析 + 自动EDA + 机器学习 + Web应用
-```
-
-后续将继续扩展 AI 自动报告生成能力，逐步发展为轻量级 AutoML 数据分析平台。
+MIT
