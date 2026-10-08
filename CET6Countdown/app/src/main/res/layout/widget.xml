@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="17dp" android:orientation="vertical" android:gravity="center_vertical" android:background="@drawable/background">
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CET-6  ·  六级倒计时                 GOAL 550" android:textColor="#B9E5DC" android:textSize="12sp"/>
+<LinearLayout android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+<TextView android:id="@+id/days" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="#E7FFF9" android:textSize="54sp" android:textStyle="bold"/>
+<TextView android:id="@+id/unit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 天" android:textColor="#A8D7D1" android:textSize="18sp"/>
+<TextView android:id="@+id/detail" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="right" android:text="-- 小时 -- 分钟" android:textColor="#B2CED6" android:textSize="11sp"/>
+</LinearLayout>
+<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2026.12.12  ·  15:00 北京时间" android:textColor="#B5C9CE" android:textSize="11sp"/>
+</LinearLayout>
