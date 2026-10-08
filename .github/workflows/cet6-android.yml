@@ -1,0 +1,36 @@
+name: CET6 Android APK
+on:
+  push:
+    branches:
+      - 'chatgpt/cet6-countdown-20261008'
+    paths:
+      - 'CET6Countdown/**'
+      - '.github/workflows/cet6-android.yml'
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - name: Install Android SDK 35
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Assemble debug APK
+        working-directory: CET6Countdown
+        run: gradle --no-daemon assembleDebug
+      - name: Upload installable APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CET6Countdown-APK
+          path: CET6Countdown/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
