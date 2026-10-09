@@ -1,17 +1,94 @@
 package com.example.cet6countdown;
+
 import android.app.Activity;
-import android.os.Bundle;
+import android.content.ComponentName;
+import android.content.SharedPreferences;
+import android.appwidget.AppWidgetManager;
 import android.graphics.Color;
+import android.os.Bundle;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+
 public class MainActivity extends Activity {
-  private WebView view;
-  @Override public void onCreate(Bundle b) { super.onCreate(b);
-    getWindow().setStatusBarColor(Color.rgb(9,13,24)); getWindow().setNavigationBarColor(Color.rgb(9,13,24));
-    view = new WebView(this); view.setBackgroundColor(Color.rgb(9,13,24)); view.getSettings().setJavaScriptEnabled(true); view.getSettings().setDomStorageEnabled(true);
-    view.setWebViewClient(new WebViewClient()); setContentView(view);
-    view.loadDataWithBaseURL("https://cet6.local/",HTML,"text/html","UTF-8",null);
-  }
-  @Override protected void onDestroy(){ if(view!=null){view.destroy();view=null;} super.onDestroy(); }
-  private static final String HTML = "<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>六级倒计时</title><style>body{margin:0;padding:32px 24px;box-sizing:border-box;background:linear-gradient(150deg,#193348,#090d18 65%);color:#e6fff9;font-family:sans-serif;min-height:100vh}small{color:#91c9c3}h1{margin-top:55px;font-size:25px}#days{font-size:108px;letter-spacing:-5px;font-weight:800}section{border:1px solid #325760;background:#142a3b;padding:20px;border-radius:24px;margin:25px 0}label{display:block;margin:19px 0}input{accent-color:#8ce2c9}p{color:#bdd4de;font-size:14px}</style></head><body><small>CET-6 · GOAL 550</small><h1>距离英语六级考试</h1><section><small>距离考试还有</small><div><span id='days'>--</span> 天</div><p id='detail'>-- 小时 -- 分钟 -- 秒</p><p>2026.12.12 周六 15:00 北京时间</p></section><h3>今日复习计划</h3><label><input type='checkbox' data-id='listening'> 听力 30 分钟</label><label><input type='checkbox' data-id='reading'> 阅读 25 分钟</label><label><input type='checkbox' data-id='words'> 词汇 20 分钟</label><label><input type='checkbox' data-id='writing'> 写作或翻译 15 分钟</label><script>const end=Date.parse('2026-12-12T15:00:00+08:00');function tick(){let n=Math.max(0,Math.floor((end-Date.now())/1000));document.getElementById('days').textContent=Math.floor(n/86400);let p=v=>String(v).padStart(2,'0');document.getElementById('detail').textContent=p(Math.floor(n/3600)%24)+' 小时 '+p(Math.floor(n/60)%60)+' 分钟 '+p(n%60)+' 秒';}tick();setInterval(tick,1000);let today=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());document.querySelectorAll('input').forEach(e=>{let k='c6-'+today+'-'+e.dataset.id;try{e.checked=localStorage.getItem(k)==='1'}catch(x){}e.onchange=()=>{try{localStorage.setItem(k,e.checked?'1':'0')}catch(x){}}});</scr"+"ipt></body></html>";
+    private WebView webView;
+
+    @Override
+    public void onCreate(Bundle state) {
+        super.onCreate(state);
+        getWindow().setStatusBarColor(Color.rgb(11,17,30));
+        getWindow().setNavigationBarColor(Color.rgb(11,17,30));
+        webView = new WebView(this);
+        webView.setBackgroundColor(Color.rgb(11,17,30));
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.getSettings().setAllowFileAccess(false);
+        webView.getSettings().setAllowContentAccess(false);
+        webView.addJavascriptInterface(new SettingsBridge(), "CETBridge");
+        webView.setWebViewClient(new WebViewClient() {
+            @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return !url.startsWith("https://cet6.local/");
+            }
+        });
+        setContentView(webView);
+        try {
+            String html = readAsset("index.html")
+                .replace("/*__CSS__*/", readAsset("style.css"))
+                .replace("/*__JS__*/", readAsset("app.js"));
+            // Retain the previous application's origin for localStorage migration.
+            webView.loadDataWithBaseURL("https://cet6.local/",html,"text/html","UTF-8",null);
+        } catch(Exception error) {
+            webView.loadDataWithBaseURL("https://cet6.local/",
+                "<h2 style='color:white'>页面加载失败，请重新安装。</h2>","text/html","UTF-8",null);
+        }
+    }
+
+    private String readAsset(String filename) throws Exception {
+        StringBuilder out = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+            getAssets().open(filename), StandardCharsets.UTF_8));
+        try {
+            String line;
+            while((line=reader.readLine())!=null) out.append(line).append('\n');
+        } finally { reader.close(); }
+        return out.toString();
+    }
+
+    private class SettingsBridge {
+        @JavascriptInterface
+        public void syncWidget(String exam, String goal, int completed, int total, String theme) {
+            if(exam==null||!exam.matches("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}")) return;
+            int score;
+            try { score=Integer.parseInt(goal); }
+            catch(Exception e) { return; }
+            if(score<1||score>710) return;
+            if(!"violet".equals(theme)&&!"light".equals(theme)) theme="midnight";
+            final String activeTheme=theme;
+            SharedPreferences prefs=getSharedPreferences("cet6_widget",MODE_PRIVATE);
+            prefs.edit().putString("exam",exam).putInt("goal",score)
+                .putInt("completed",Math.max(0,completed))
+                .putInt("total",Math.max(0,total))
+                .putString("theme",activeTheme).apply();
+            runOnUiThread(() -> {
+                int barColor;
+                if("light".equals(activeTheme)) barColor=Color.rgb(247,247,241);
+                else if("violet".equals(activeTheme)) barColor=Color.rgb(17,16,32);
+                else barColor=Color.rgb(11,17,30);
+                getWindow().setStatusBarColor(barColor);
+                getWindow().setNavigationBarColor(barColor);
+                getWindow().getDecorView().setSystemUiVisibility("light".equals(activeTheme)
+                    ? (android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR) : 0);
+                CET6Widget.updateAll(MainActivity.this);
+            });
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(webView!=null){ webView.destroy();webView=null; }
+        super.onDestroy();
+    }
 }
