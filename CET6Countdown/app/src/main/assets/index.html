@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<meta name="theme-color" content="#101926"/>
+<title>CET-6 · Study Space</title>
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark">6</span><span>CET SIX <em>STUDIO</em></span></div>
+    <button class="icon-btn" id="openSettings" title="个性化设置" aria-label="打开设置">⚙</button>
+  </header>
+  <main>
+    <section id="homePage" class="page active">
+      <div class="hero-intro"><p class="eyebrow" id="todayText">TODAY · KEEP GOING</p><h1>每一天，<br/>都离目标更近一点<span class="accent">.</span></h1><p class="hero-sub">稳稳前进，把努力留给每一天。</p></div>
+      <article class="countdown-card">
+        <div class="card-top"><span class="capsule">✦ CET-6 COUNTDOWN</span><span class="score-pill" id="goalLabel">目标 550</span></div>
+        <div class="count-caption">距离考试还有</div>
+        <div class="days-row"><span id="daysNum">--</span><span class="days-unit">天</span></div>
+        <div class="timer-row"><span id="hNum">--</span><small>时</small><span class="timer-sep">:</span><span id="mNum">--</span><small>分</small><span class="timer-sep">:</span><span id="sNum">--</span><small>秒</small></div>
+        <div class="card-bottom"><span class="dot"></span><span id="dateLabel">2026.12.12 · 星期六 · 15:00</span><span class="timezone">北京时间</span></div>
+      </article>
+      <div class="metrics">
+        <div class="metric"><span class="metric-caption">今日任务</span><div class="metric-number"><b id="metricDone">0</b><small id="metricTotal">/ 4 已完成</small></div><div class="mini-bar"><i id="metricFill"></i></div></div>
+        <div class="metric"><span class="metric-caption">连续打卡</span><div class="metric-number"><b id="metricStreak">0</b><small>天</small></div><span class="metric-note">再坚持一点点 ✨</span></div>
+      </div>
+      <div class="section-title"><div><h2>今日学习计划</h2><p id="planSubtitle">今天也要认真完成自己的安排</p></div><button class="add-btn" id="quickAdd">＋ 添加</button></div>
+      <div id="taskList" class="task-list"></div>
+      <p class="hint">点击任务名称可以编辑 · 每天自动刷新完成状态</p>
+    </section>
+    <section id="planPage" class="page">
+      <div class="page-head"><p class="eyebrow">YOUR PLAN</p><h1>学习计划<span class="accent">.</span></h1><p class="hero-sub">任务由你自己决定，随时增删与调整。</p></div>
+      <div class="section-title"><h2>全部任务 <span id="taskCount" class="sub-count"></span></h2><button class="add-btn" id="planAdd">＋ 新建任务</button></div>
+      <div id="planList" class="task-list"></div>
+      <div class="tip-card">💡 <span>修改任务名称或时长会保留当天该任务的完成状态；删除任务后将不再出现在每日计划中。</span></div>
+    </section>
+    <section id="settingsPage" class="page">
+      <div class="page-head"><p class="eyebrow">MAKE IT YOURS</p><h1>个性化设置<span class="accent">.</span></h1><p class="hero-sub">把倒计时调整成你喜欢的样子。</p></div>
+      <div class="settings-card">
+        <label class="input-label" for="scoreInput">目标分数 <span>满分 710</span></label>
+        <input id="scoreInput" type="number" min="1" max="710" inputmode="numeric" placeholder="例如 550"/>
+        <label class="input-label" for="examInput">考试时间 <span>北京时间 (UTC+8)</span></label>
+        <input id="examInput" type="datetime-local"/>
+        <label class="input-label">颜色主题</label>
+        <div class="theme-picker">
+          <button class="theme-option" data-theme="midnight"><span class="theme-dot midnight-dot"></span>薄荷深蓝</button>
+          <button class="theme-option" data-theme="violet"><span class="theme-dot violet-dot"></span>星空紫</button>
+          <button class="theme-option" data-theme="light"><span class="theme-dot light-dot"></span>奶油白</button>
+        </div>
+        <button id="saveSettings" class="primary-btn">保存设置并同步桌面组件</button>
+      </div>
+      <div class="tip-card">📱 <span>考试日期、目标分数和今日完成数会同步至手机桌面小组件；桌面倒计时约每 30 分钟自动更新，打开应用后立即刷新。</span></div>
+      <div class="settings-foot">CET SIX STUDIO · V2.0<br/>离线可用 · 数据保存在本机</div>
+    </section>
+  </main>
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-page="homePage"><span class="nav-icon">⌂</span><span>首页</span></button>
+    <button class="nav-btn" data-page="planPage"><span class="nav-icon">▤</span><span>计划</span></button>
+    <button class="nav-btn" data-page="settingsPage"><span class="nav-icon">⚙</span><span>设置</span></button>
+  </nav>
+</div>
+<div class="modal-overlay" id="taskModal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-top"><h2 id="modalTitle">新建学习任务</h2><button id="closeModal" class="icon-btn" aria-label="关闭">×</button></div>
+    <label class="input-label" for="taskTitle">任务名称</label><input type="text" id="taskTitle" maxlength="36" placeholder="例如：精听真题一套"/>
+    <label class="input-label" for="taskCategory">任务分类</label>
+    <select id="taskCategory"><option value="听力">🎧 听力</option><option value="阅读">📖 阅读</option><option value="词汇">📝 词汇</option><option value="写作翻译">✍ 写作翻译</option><option value="其他">✦ 其他</option></select>
+    <label class="input-label" for="taskDuration">预计时长（分钟）</label><input type="number" id="taskDuration" min="1" max="600" inputmode="numeric" value="30"/>
+    <div class="modal-actions"><button id="deleteTask" class="danger-btn" hidden>删除</button><button id="saveTask" class="primary-btn">保存任务</button></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+<script>/*__JS__*/</script>
+</body>
+</html>
