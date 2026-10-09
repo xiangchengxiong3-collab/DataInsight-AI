@@ -1,10 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent" android:padding="17dp" android:orientation="vertical" android:gravity="center_vertical" android:background="@drawable/background">
-<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="CET-6  ·  六级倒计时                 GOAL 550" android:textColor="#B9E5DC" android:textSize="12sp"/>
-<LinearLayout android:orientation="horizontal" android:gravity="center_vertical" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
-<TextView android:id="@+id/days" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="#E7FFF9" android:textSize="54sp" android:textStyle="bold"/>
-<TextView android:id="@+id/unit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text=" 天" android:textColor="#A8D7D1" android:textSize="18sp"/>
-<TextView android:id="@+id/detail" android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:gravity="right" android:text="-- 小时 -- 分钟" android:textColor="#B2CED6" android:textSize="11sp"/>
-</LinearLayout>
-<TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="2026.12.12  ·  15:00 北京时间" android:textColor="#B5C9CE" android:textSize="11sp"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:gravity="center_vertical"
+    android:padding="17dp" android:background="@drawable/background">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="center_vertical" android:orientation="horizontal">
+        <TextView android:id="@+id/w_tag" android:layout_width="0dp"
+            android:layout_weight="1" android:layout_height="wrap_content"
+            android:text="CET-6 · COUNTDOWN" android:textStyle="bold" android:textSize="11sp"
+            android:textColor="#80E7D1"/>
+        <TextView android:id="@+id/w_goal" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="GOAL 550" android:textStyle="bold"
+            android:textSize="11sp" android:textColor="#80E7D1"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:gravity="center_vertical" android:orientation="horizontal">
+        <TextView android:id="@+id/days" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="63" android:textSize="58sp"
+            android:textColor="#E8FFF8" android:textStyle="bold"/>
+        <TextView android:id="@+id/unit" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="天" android:paddingStart="6dp"
+            android:textSize="18sp" android:textColor="#80E7D1"/>
+        <TextView android:id="@+id/detail" android:layout_width="0dp" android:layout_weight="1"
+            android:gravity="end" android:layout_height="wrap_content" android:text="22小时 35分钟"
+            android:textSize="11sp" android:textColor="#ADC9D1"/>
+    </LinearLayout>
+    <TextView android:id="@+id/w_date" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:text="2026.12.12 15:00 北京时间"
+        android:textSize="11sp" android:textColor="#ADC9D1"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="9dp">
+        <ProgressBar android:id="@+id/widget_progress" style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="5dp" android:max="4" android:progress="0"
+            android:progressTint="#80E7D1" android:progressBackgroundTint="#385466"/>
+        <TextView android:id="@+id/w_progress" android:layout_width="wrap_content"
+            android:layout_marginStart="12dp" android:layout_height="wrap_content"
+            android:text="今日完成 0 / 4" android:textSize="10sp" android:textColor="#ADC9D1"/>
+    </LinearLayout>
 </LinearLayout>
