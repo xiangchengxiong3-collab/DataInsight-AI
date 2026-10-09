@@ -157,6 +157,7 @@
     if(!title){notify("请输入任务名称");return;}
     if(!Number.isInteger(minutes)||minutes<1||minutes>600){notify("任务时长请填写 1–600 分钟");return;}
     const category=$("taskCategory").value;
+    const editing=Boolean(editId);
     if(editId){
       const pos=tasks.findIndex(t=>t.id===editId);
       if(pos>=0)tasks[pos]={...tasks[pos],title,category,minutes};
@@ -166,7 +167,7 @@
       tasks.push({id,title,category,minutes});
     }
     if(save(TASKS_KEY,tasks)){
-      closeModal();render();syncNative();notify(editId?"已更新任务":"任务已添加");
+      closeModal();render();syncNative();notify(editing?"已更新任务":"任务已添加");
     }
   }
   function removeTask(){
