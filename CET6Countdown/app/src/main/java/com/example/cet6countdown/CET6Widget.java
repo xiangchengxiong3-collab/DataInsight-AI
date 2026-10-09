@@ -37,6 +37,8 @@ public class CET6Widget extends AppWidgetProvider {
         int goal=sp.getInt("goal",550);
         int total=sp.getInt("total",4);
         int completed=sp.getInt("completed",0);
+        String today=java.time.LocalDate.now(BEIJING).toString();
+        if(!today.equals(sp.getString("progressDate",""))) completed=0;
         String theme=sp.getString("theme","midnight");
         LocalDateTime local;
         try {local=LocalDateTime.parse(examText);}
