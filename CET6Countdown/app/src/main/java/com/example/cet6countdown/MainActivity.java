@@ -71,7 +71,8 @@ public class MainActivity extends Activity {
             prefs.edit().putString("exam",exam).putInt("goal",score)
                 .putInt("completed",Math.max(0,completed))
                 .putInt("total",Math.max(0,total))
-                .putString("theme",activeTheme).apply();
+                .putString("theme",activeTheme)
+                .putString("progressDate",java.time.LocalDate.now(java.time.ZoneId.of("Asia/Shanghai")).toString()).apply();
             runOnUiThread(() -> {
                 int barColor;
                 if("light".equals(activeTheme)) barColor=Color.rgb(247,247,241);
