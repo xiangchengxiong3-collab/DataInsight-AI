@@ -53,7 +53,7 @@ jobs:
           cp CET6Countdown/app/build/outputs/apk/debug/app-debug.apk CET6Countdown/download/CET6Countdown_v2.apk
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add CET6Countdown/download/CET6Countdown.apk
+          git add CET6Countdown/download/CET6Countdown_v2.apk
           if ! git diff --cached --quiet; then
             git commit -m "Publish CET6Countdown APK in isolated branch"
             git push origin HEAD:refs/heads/chatgpt/cet6-countdown-20261008
